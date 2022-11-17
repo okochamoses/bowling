@@ -97,4 +97,14 @@ class PlayerScoreTest {
     assertEquals(22, frame.getScore());
   }
 
+  @Test
+  void aStrikeShouldAddValueTheNextTwoPinFallsToItsScore() {
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(5);
+    playerScore.addPinFall(4);
+
+    assertEquals(19, playerScore.getFrames()[0].getScore());
+    assertEquals(28, playerScore.getScore());
+  }
+
 }
