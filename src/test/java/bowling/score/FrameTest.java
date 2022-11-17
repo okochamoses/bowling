@@ -129,6 +129,7 @@ class FrameTest {
     frame.addPinFall(6);
 
     assertEquals(6, frame.getScore());
+    assertEquals(6, frame.getScore());
   }
 
   private List<Integer> toArray(String str) {

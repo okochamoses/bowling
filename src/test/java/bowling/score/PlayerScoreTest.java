@@ -65,4 +65,36 @@ class PlayerScoreTest {
 
     assertEquals(12, playerScore.getScore());
   }
+
+  @Test
+  void gettingAStrikeShouldUseNextFrameForNextScore() {
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(5);
+
+    Frame frame = playerScore.getFrames()[1];
+    assertEquals(5, frame.getFirst());
+  }
+
+  @Test
+  void aFrameWithASpareAddsTheNextPinFallToItsScore() {
+    playerScore.addPinFall(3);
+    playerScore.addPinFall(7);
+    playerScore.addPinFall(5);
+    playerScore.addPinFall(3);
+
+    Frame frame = playerScore.getFrames()[0];
+    assertEquals(15, frame.getScore());
+  }
+
+  @Test
+  void aFrameWithAStrikeAddsTheNextTwoScoresToItsScore() {
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(7);
+    playerScore.addPinFall(5);
+
+    Frame frame = playerScore.getFrames()[0];
+
+    assertEquals(22, frame.getScore());
+  }
+
 }

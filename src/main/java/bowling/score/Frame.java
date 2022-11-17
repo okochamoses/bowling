@@ -70,4 +70,12 @@ public class Frame {
     return isStrike() || (first != null  && second != null);
   }
 
+  public boolean isUnhandledSpare() {
+    return this.isSpare() && getSpareExtraPinFall() == null;
+  }
+
+  public boolean isUnhandledStrike() {
+    return isStrike() && (getStrikeExtraPinFalls()[0] == null || getStrikeExtraPinFalls()[1] == null);
+  }
+
 }

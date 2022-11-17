@@ -17,13 +17,26 @@ public class PlayerScore {
   }
 
   public void addPinFall(int pinFall) {
+    updatePinFall(pinFall);
+    if (getCurrentFrame().isFilled()) currentFrame++;
+  }
+
+  private void updatePinFall(int pinFall) {
     Frame frame = getCurrentFrame();
+    int lastFrame = currentFrame - 1;
+
+    if (lastFrame >= 0
+        && (frames[lastFrame].isUnhandledSpare()
+        || frames[lastFrame].isUnhandledStrike())
+    ) {
+      frames[lastFrame].addPinFall(pinFall);
+    }
+
     frame.addPinFall(pinFall);
-    if(frame.isFilled()) currentFrame++;
   }
 
   private Frame getCurrentFrame() {
-    if(frames[currentFrame] == null) {
+    if (frames[currentFrame] == null) {
       frames[currentFrame] = new Frame();
     }
     return frames[currentFrame];
