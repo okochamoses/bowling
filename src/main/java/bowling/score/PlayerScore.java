@@ -21,23 +21,29 @@ public class PlayerScore {
   }
 
   public void addPinFall(int pinFall) {
-    updatePinFall(pinFall);
+    updateFrames(pinFall);
     if (getCurrentFrame().isFilled()) currentFrame++;
   }
 
-  private void updatePinFall(int pinFall) {
+  private void updateFrames(int pinFall) {
     Frame frame = getCurrentFrame();
     frame.addPinFall(pinFall);
     handleSpareScoring(pinFall);
     handleStrikeScoring(pinFall);
   }
 
+  private Frame getCurrentFrame() {
+    if (frames[currentFrame] == null) {
+      frames[currentFrame] = new Frame();
+    }
+    return frames[currentFrame];
+  }
+
   private void handleSpareScoring(int pinFall) {
     int lastFrame = currentFrame - 1;
+    if (lastFrame < 0 || !frames[lastFrame].isUnhandledSpare()) return;
 
-    if (lastFrame >= 0 && frames[lastFrame].isUnhandledSpare()) {
-      frames[lastFrame].addPinFall(pinFall);
-    }
+    frames[lastFrame].addPinFall(pinFall);
   }
 
   private void handleStrikeScoring(int pinFall) {
@@ -54,15 +60,8 @@ public class PlayerScore {
   }
 
   private void addStrikesToStrikeFrame() {
-    if(frames[currentFrame].isStrike())
-      strikeFrames.add(frames[currentFrame]);
-  }
-
-  private Frame getCurrentFrame() {
-    if (frames[currentFrame] == null) {
-      frames[currentFrame] = new Frame();
-    }
-    return frames[currentFrame];
+    if (!frames[currentFrame].isStrike()) return;
+    strikeFrames.add(frames[currentFrame]);
   }
 
   public int getScore() {

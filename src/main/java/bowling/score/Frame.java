@@ -13,9 +13,7 @@ public class Frame {
   private Integer spareExtraPinFall;
 
   public void addPinFall(int pinFall) {
-    if(pinFall != FOUL) {
-      score += pinFall;
-    }
+    addToScore(pinFall);
 
     if (isSpare()) {
       addToSpareExtraPinFall(pinFall);
@@ -26,13 +24,17 @@ public class Frame {
     }
   }
 
+  private void addToScore(int pinFall) {
+    score += pinFall == FOUL ? 0 : pinFall;
+  }
+
   public boolean isSpare() {
-    return first != null && second != null && first + second == 10;
+    return positionsFilled() && first + second == 10;
   }
 
   private void addToSpareExtraPinFall(int pinFall) {
     if (spareExtraPinFall != null)
-      throw new ExtraScoreException("Frame cannot add extra score");
+      throw new ExtraScoreException();
     spareExtraPinFall = pinFall;
   }
 
@@ -42,7 +44,7 @@ public class Frame {
 
   private void addToStrikeExtraPinFalls(int pinFall) {
     if (strikeExtraPinFalls[0] != null && strikeExtraPinFalls[1] != null)
-      throw new ExtraScoreException("Frame cannot add extra score");
+      throw new ExtraScoreException();
 
     if (strikeExtraPinFalls[0] == null) {
       strikeExtraPinFalls[0] = pinFall;
@@ -52,8 +54,8 @@ public class Frame {
   }
 
   private void updateNormalFrameScore(int pinFall) {
-    if (first != null && second != null)
-      throw new ExtraScoreException("Frame cannot add extra score");
+    if (positionsFilled())
+      throw new ExtraScoreException();
 
     if (first == null) {
       first = pinFall;
@@ -62,12 +64,16 @@ public class Frame {
     }
   }
 
+  private boolean positionsFilled() {
+    return first != null && second != null;
+  }
+
   public int getScore() {
     return score;
   }
 
   public boolean isFilled() {
-    return isStrike() || (first != null  && second != null);
+    return isStrike() || positionsFilled();
   }
 
   public boolean isUnhandledSpare() {
