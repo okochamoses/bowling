@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class Frame {
+  private static final int FOUL = -1;
   private final Integer[] strikeExtraPinFalls = new Integer[2];
   private Integer first;
   private Integer second;
@@ -12,7 +13,9 @@ public class Frame {
   private Integer spareExtraPinFall;
 
   public void addPinFall(int pinFall) {
-    score += pinFall;
+    if(pinFall != FOUL) {
+      score += pinFall;
+    }
 
     if (isSpare()) {
       addToSpareExtraPinFall(pinFall);

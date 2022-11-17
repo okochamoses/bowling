@@ -123,6 +123,14 @@ class FrameTest {
 
   }
 
+  @Test
+  void shouldNotAffectFrameScoreWhenFoulIsAdded() {
+    frame.addPinFall(-1);
+    frame.addPinFall(6);
+
+    assertEquals(6, frame.getScore());
+  }
+
   private List<Integer> toArray(String str) {
     return Arrays.stream(str.split(","))
         .map(Integer::valueOf).collect(Collectors.toList());

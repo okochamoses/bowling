@@ -2,6 +2,8 @@ package bowling.score;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @Getter
 public class PlayerScore {
   private final Player player;
@@ -25,6 +27,12 @@ public class PlayerScore {
       frames[currentFrame] = new Frame();
     }
     return frames[currentFrame];
+  }
+
+  public int getScore() {
+    return Arrays.stream(frames)
+        .map(frame -> frame == null ? 0 : frame.getScore())
+        .mapToInt(Integer::intValue).sum();
   }
 
 }

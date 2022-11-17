@@ -47,4 +47,22 @@ class PlayerScoreTest {
     assertEquals(5, frame1.getSecond());
     assertEquals(3, frame2.getFirst());
   }
+
+  @Test
+  void shouldGetTotalOfAddedScores() {
+    playerScore.addPinFall(2);
+    playerScore.addPinFall(1);
+
+    assertEquals(3, playerScore.getScore());
+  }
+
+  @Test
+  void shouldTakeFoulAsZeroWhileGettingTotalScore() {
+    playerScore.addPinFall(5);
+    playerScore.addPinFall(-1);
+    playerScore.addPinFall(3);
+    playerScore.addPinFall(4);
+
+    assertEquals(12, playerScore.getScore());
+  }
 }
