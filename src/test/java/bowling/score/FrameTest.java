@@ -107,6 +107,22 @@ class FrameTest {
     assertThrows(ExtraScoreException.class, () -> toArray(values).forEach(frame::addPinFall));
   }
 
+  @Test
+  void shouldReturnFilledWhenFrameIsStrike() {
+    frame.addPinFall(10);
+
+    assertTrue(frame.isFilled());
+  }
+
+  @Test
+  void shouldReturnFilledWhenBothFramePositionsHaveBeenFilled() {
+    frame.addPinFall(3);
+    frame.addPinFall(6);
+
+    assertTrue(frame.isFilled());
+
+  }
+
   private List<Integer> toArray(String str) {
     return Arrays.stream(str.split(","))
         .map(Integer::valueOf).collect(Collectors.toList());

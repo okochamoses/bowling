@@ -63,4 +63,8 @@ public class Frame {
     return score;
   }
 
+  public boolean isFilled() {
+    return isStrike() || (first != null  && second != null);
+  }
+
 }
