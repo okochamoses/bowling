@@ -2,8 +2,10 @@ package bowling.score;
 
 import bowling.exceptions.ExtraScoreException;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class Frame {
   private static final int FOUL = -1;
   private final Integer[] strikeExtraPinFalls = new Integer[2];
@@ -24,7 +26,7 @@ public class Frame {
     }
   }
 
-  private void addToScore(int pinFall) {
+  protected void addToScore(int pinFall) {
     score += pinFall == FOUL ? 0 : pinFall;
   }
 
@@ -53,7 +55,7 @@ public class Frame {
     }
   }
 
-  private void updateNormalFrameScore(int pinFall) {
+  protected void updateNormalFrameScore(int pinFall) {
     if (positionsFilled())
       throw new ExtraScoreException();
 

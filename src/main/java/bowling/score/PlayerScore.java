@@ -22,7 +22,7 @@ public class PlayerScore {
 
   public void addPinFall(int pinFall) {
     updateFrames(pinFall);
-    if (getCurrentFrame().isFilled()) currentFrame++;
+    if (getCurrentFrame().isFilled() && currentFrame != 9) currentFrame++;
   }
 
   private void updateFrames(int pinFall) {
@@ -33,6 +33,9 @@ public class PlayerScore {
   }
 
   private Frame getCurrentFrame() {
+    if(currentFrame == 9 && frames[currentFrame] == null) {
+      frames[currentFrame] = new ThreeValueFrame();
+    }
     if (frames[currentFrame] == null) {
       frames[currentFrame] = new Frame();
     }
@@ -51,7 +54,8 @@ public class PlayerScore {
 
     for (Frame frame : strikeFrames) {
       frame.addPinFall(pinFall);
-      removeStrikeFrame = !frame.isUnhandledStrike();
+      if(!frame.isUnhandledStrike())
+        removeStrikeFrame = true;
     }
 
     if (removeStrikeFrame) strikeFrames.poll();
@@ -60,7 +64,8 @@ public class PlayerScore {
   }
 
   private void addStrikesToStrikeFrame() {
-    if (!frames[currentFrame].isStrike()) return;
+    if (!frames[currentFrame].isStrike() ||
+        frames[currentFrame] instanceof ThreeValueFrame) return;
     strikeFrames.add(frames[currentFrame]);
   }
 

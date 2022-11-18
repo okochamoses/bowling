@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PlayerScoreTest {
   PlayerScore playerScore;
@@ -107,4 +108,68 @@ class PlayerScoreTest {
     assertEquals(28, playerScore.getScore());
   }
 
+  @Test
+  void lastFrameIsAThreeValueFrame() {
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+
+    assertTrue(playerScore.getFrames()[9] instanceof ThreeValueFrame);
+  }
+
+  @Test
+  void lastStrikeGets2AdditionalRolls() {
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+
+    ThreeValueFrame frame = (ThreeValueFrame) playerScore.getFrames()[9];
+
+    assertEquals(10, frame.getFirst());
+    assertEquals(30, frame.getScore());
+    assertEquals(300, playerScore.getScore());
+  }
+
+  @Test
+  void lastSpareGetsAdditionalRoll() {
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(7);
+    playerScore.addPinFall(3);
+    playerScore.addPinFall(9);
+    playerScore.addPinFall(0);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(0);
+    playerScore.addPinFall(8);
+    playerScore.addPinFall(8);
+    playerScore.addPinFall(2);
+    playerScore.addPinFall(0);
+    playerScore.addPinFall(6);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(10);
+    playerScore.addPinFall(2);
+    playerScore.addPinFall(8);
+    playerScore.addPinFall(1);
+
+    ThreeValueFrame frame = (ThreeValueFrame) playerScore.getFrames()[9];
+
+    assertEquals(2, frame.getFirst());
+    assertEquals(8, frame.getSecond());
+    assertEquals(1, frame.getThird());
+  }
 }
