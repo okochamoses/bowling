@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -59,21 +58,6 @@ class FrameTest {
   }
 
   @Test
-  void frameWithFirstScoreAdditionAs10ShouldBeAStrike() {
-    frame.addPinFall(10);
-
-    assertTrue(frame.isStrike());
-  }
-
-  @Test
-  void aStrikeCanBeDifferentiatedFromASpare() {
-    frame.addPinFall(10);
-
-    assertTrue(frame.isStrike());
-    assertFalse(frame.isSpare());
-  }
-
-  @Test
   void aSpareShouldTakeAnExtraScore() {
     frame.addPinFall(3);
     frame.addPinFall(7);
@@ -87,14 +71,14 @@ class FrameTest {
 
   @Test
   void aStrikeShouldTake2ExtraScores() {
-    frame.addPinFall(10);
-    frame.addPinFall(7);
-    frame.addPinFall(2);
+    StrikeFrame strikeFrame = new StrikeFrame();
+    strikeFrame.addPinFall(10);
+    strikeFrame.addPinFall(7);
+    strikeFrame.addPinFall(2);
 
-    assertEquals(19, frame.getScore());
-    assertEquals(10, frame.getFirst());
-    assertNull(frame.getSecond());
-    assertTrue(frame.isStrike());
+    assertEquals(19, strikeFrame.getScore());
+    assertEquals(10, strikeFrame.getFirst());
+    assertNull(strikeFrame.getSecond());
   }
 
   @ParameterizedTest
@@ -109,9 +93,10 @@ class FrameTest {
 
   @Test
   void shouldReturnFilledWhenFrameIsStrike() {
-    frame.addPinFall(10);
+    StrikeFrame strikeFrame = new StrikeFrame();
+    strikeFrame.addPinFall(10);
 
-    assertTrue(frame.isFilled());
+    assertTrue(strikeFrame.isFilled());
   }
 
   @Test

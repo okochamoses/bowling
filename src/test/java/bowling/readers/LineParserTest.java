@@ -35,8 +35,13 @@ class LineParserTest {
     assertEquals(-1, scores.get("John").get(0));
   }
 
+  @Test
+  void shouldThrowExceptionForEmptyInput() {
+    assertThrows(IllegalArgumentException.class, () -> lineParser.parse(""));
+  }
+
   @ParameterizedTest
-  @CsvSource(value = {"John", "John10", "John\tMoses", "''"})
+  @CsvSource(value = {"John", "John10", "John\tMoses"})
   void shouldThrowExceptionForInvalidInput(String givenFileString) {
     assertThrows(IllegalArgumentException.class, () -> lineParser.parse(givenFileString));
   }

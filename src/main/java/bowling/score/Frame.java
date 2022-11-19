@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 public class Frame {
   private static final int FOUL = -1;
-  private final Integer[] strikeExtraPinFalls = new Integer[2];
   private Integer first;
   private Integer second;
   private int score;
@@ -19,8 +18,6 @@ public class Frame {
 
     if (isSpare()) {
       addToSpareExtraPinFall(pinFall);
-    } else if (isStrike()) {
-      addToStrikeExtraPinFalls(pinFall);
     } else {
       updateNormalFrameScore(pinFall);
     }
@@ -38,21 +35,6 @@ public class Frame {
     if (spareExtraPinFall != null)
       throw new ExtraScoreException();
     spareExtraPinFall = pinFall;
-  }
-
-  public boolean isStrike() {
-    return first != null && first == 10;
-  }
-
-  private void addToStrikeExtraPinFalls(int pinFall) {
-    if (strikeExtraPinFalls[0] != null && strikeExtraPinFalls[1] != null)
-      throw new ExtraScoreException();
-
-    if (strikeExtraPinFalls[0] == null) {
-      strikeExtraPinFalls[0] = pinFall;
-    } else {
-      strikeExtraPinFalls[1] = pinFall;
-    }
   }
 
   protected void updateNormalFrameScore(int pinFall) {
@@ -75,15 +57,11 @@ public class Frame {
   }
 
   public boolean isFilled() {
-    return isStrike() || positionsFilled();
+    return positionsFilled();
   }
 
   public boolean isUnhandledSpare() {
     return this.isSpare() && getSpareExtraPinFall() == null;
-  }
-
-  public boolean isUnhandledStrike() {
-    return isStrike() && (getStrikeExtraPinFalls()[0] == null || getStrikeExtraPinFalls()[1] == null);
   }
 
 }

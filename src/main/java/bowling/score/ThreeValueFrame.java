@@ -30,4 +30,8 @@ public class ThreeValueFrame extends Frame {
     }
   }
 
+  private boolean isStrike() {
+    return getFirst() != null && getFirst() == 10;
+  }
+
 }

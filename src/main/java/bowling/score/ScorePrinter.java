@@ -62,20 +62,18 @@ public class ScorePrinter<T> {
       sb.append(scoreSoFar)
           .append("\t\t");
     }
-    String score = String.format("%s\n" +
+    return String.format("%s\n" +
             "Pinfalls\t%s"
         , playerScore.getPlayer().getName(), sb);
 
-    return score;
   }
 
   private void printFrames(PlayerScore playerScore, StringBuilder sb) {
     for (Frame frame : playerScore.getFrames()) {
-      System.out.println(frame);
       if (frame instanceof ThreeValueFrame) {
         printLastFrame(sb, frame);
       } else {
-        if (frame.isStrike()) {
+        if (frame instanceof StrikeFrame) {
           printStrike(sb, frame);
         } else if (frame.isSpare()) {
           printSpare(sb, frame);
