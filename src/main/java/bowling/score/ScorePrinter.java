@@ -1,5 +1,6 @@
 package bowling.score;
 
+import bowling.exceptions.ExtraScoreException;
 import bowling.readers.Parser;
 import bowling.readers.ScoreReader;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,11 @@ public class ScorePrinter<T> {
   private final ScoreReader<T> reader;
 
   public void printScore(T resource) {
-    System.out.println(getScoreBoard(resource));
+    try {
+      System.out.println(getScoreBoard(resource));
+    } catch (IllegalArgumentException | ExtraScoreException e) {
+      System.out.println(e.getMessage());
+    }
   }
 
   public String getScoreBoard(T resource) {
