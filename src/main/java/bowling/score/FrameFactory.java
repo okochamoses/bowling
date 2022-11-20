@@ -8,7 +8,7 @@ public class FrameFactory {
     Frame frame = frames[currentFrame];
 
     if (currentFrame == 9 && frame == null) {
-      return new ThreeValueFrame();
+      return new FinalFrame();
     }
     if (currentFrame == 9) {
       return frame;

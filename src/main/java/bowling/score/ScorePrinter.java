@@ -38,6 +38,7 @@ public class ScorePrinter<T> {
   private String getScoreString(Collection<PlayerScore> playerScores) {
     StringBuilder sb = new StringBuilder();
     sb.append(getHeader());
+
     for (PlayerScore playerScore : playerScores) {
       sb.append(printPlayerScore(playerScore)).append("\n");
     }
@@ -53,8 +54,10 @@ public class ScorePrinter<T> {
     StringBuilder sb = new StringBuilder();
 
     printFrames(playerScore, sb);
+
     sb.append("\n");
     sb.append("Score\t\t");
+
     int scoreSoFar = 0;
     for (Frame frame : playerScore.getFrames()) {
       scoreSoFar += frame.getScore();
@@ -69,8 +72,8 @@ public class ScorePrinter<T> {
 
   private void printFrames(PlayerScore playerScore, StringBuilder sb) {
     for (Frame frame : playerScore.getFrames()) {
-      if (frame instanceof ThreeValueFrame) {
-        printLastFrame(sb, frame);
+      if (frame instanceof FinalFrame) {
+        printLastFrame(sb, (FinalFrame) frame);
       } else {
         if (frame instanceof StrikeFrame) {
           printStrike(sb, frame);
@@ -83,13 +86,12 @@ public class ScorePrinter<T> {
     }
   }
 
-  private void printLastFrame(StringBuilder sb, Frame frame) {
-    ThreeValueFrame lastFrame = (ThreeValueFrame) frame;
-    sb.append(processData(frame.getFirst()))
+  private void printLastFrame(StringBuilder sb, FinalFrame finalFrame) {
+    sb.append(processData(finalFrame.getFirst()))
         .append("\t")
-        .append(processData(frame.getSecond()))
+        .append(processData(finalFrame.getSecond()))
         .append("\t")
-        .append(lastFrame.getThird() == null ? "" : processData(lastFrame.getThird()))
+        .append(finalFrame.getThird() == null ? "" : processData(finalFrame.getThird()))
         .append("\t");
   }
 

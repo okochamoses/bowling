@@ -121,7 +121,7 @@ class PlayerScoreTest {
     playerScore.addPinFall(10);
     playerScore.addPinFall(10);
 
-    assertTrue(playerScore.getFrames()[9] instanceof ThreeValueFrame);
+    assertTrue(playerScore.getFrames()[9] instanceof FinalFrame);
   }
 
   @Test
@@ -139,7 +139,7 @@ class PlayerScoreTest {
     playerScore.addPinFall(10);
     playerScore.addPinFall(10);
 
-    ThreeValueFrame frame = (ThreeValueFrame) playerScore.getFrames()[9];
+    FinalFrame frame = (FinalFrame) playerScore.getFrames()[9];
 
     assertEquals(10, frame.getFirst());
     assertEquals(30, frame.getScore());
@@ -166,7 +166,7 @@ class PlayerScoreTest {
     playerScore.addPinFall(8);
     playerScore.addPinFall(1);
 
-    ThreeValueFrame frame = (ThreeValueFrame) playerScore.getFrames()[9];
+    FinalFrame frame = (FinalFrame) playerScore.getFrames()[9];
 
     assertEquals(2, frame.getFirst());
     assertEquals(8, frame.getSecond());

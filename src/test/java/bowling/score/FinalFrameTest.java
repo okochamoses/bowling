@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ThreeValueFrameTest {
+class FinalFrameTest {
 
   @Test
   void shouldThrowExceptionWhenAThirdValueIsAddedAndExistingIsNotSpareOrStrike() {
-    ThreeValueFrame frame = new ThreeValueFrame();
+    FinalFrame frame = new FinalFrame();
     frame.addPinFall(1);
     frame.addPinFall(1);
 
@@ -19,7 +19,7 @@ class ThreeValueFrameTest {
 
   @Test
   void shouldHandle3Values() {
-    ThreeValueFrame frame = new ThreeValueFrame();
+    FinalFrame frame = new FinalFrame();
     frame.addPinFall(10);
     frame.addPinFall(1);
 

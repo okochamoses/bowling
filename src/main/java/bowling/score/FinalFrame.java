@@ -2,10 +2,10 @@ package bowling.score;
 
 import bowling.exceptions.ExtraScoreException;
 
-public class ThreeValueFrame extends Frame {
+public class FinalFrame extends Frame {
   private static final int FRAME_LENGTH = 3;
 
-  public ThreeValueFrame() {
+  public FinalFrame() {
     super(FRAME_LENGTH);
   }
 
