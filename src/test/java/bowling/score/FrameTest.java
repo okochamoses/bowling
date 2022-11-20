@@ -50,23 +50,15 @@ class FrameTest {
   }
 
   @Test
-  void frameWithTwoPinFallTotalling10IsASpare() {
-    frame.addPinFall(7);
-    frame.addPinFall(3);
-
-    assertTrue(frame.isSpare());
-  }
-
-  @Test
   void aSpareShouldTakeAnExtraScore() {
-    frame.addPinFall(3);
-    frame.addPinFall(7);
-    frame.addPinFall(5);
+    SpareFrame spareFrame = new SpareFrame();
+    spareFrame.addPinFall(3);
+    spareFrame.addPinFall(7);
+    spareFrame.addPinFall(5);
 
-    assertEquals(15, frame.getScore());
-    assertEquals(3, frame.getFirst());
-    assertEquals(7, frame.getSecond());
-    assertTrue(frame.isSpare());
+    assertEquals(15, spareFrame.getScore());
+    assertEquals(3, spareFrame.getFirst());
+    assertEquals(7, spareFrame.getSecond());
   }
 
   @Test
@@ -89,6 +81,11 @@ class FrameTest {
   })
   void shouldThrowExceptionIfAdditionalScoreIsAdded(String values) {
     assertThrows(ExtraScoreException.class, () -> toArray(values).forEach(frame::addPinFall));
+  }
+
+  private List<Integer> toArray(String str) {
+    return Arrays.stream(str.split(","))
+        .map(Integer::valueOf).collect(Collectors.toList());
   }
 
   @Test
@@ -115,11 +112,6 @@ class FrameTest {
 
     assertEquals(6, frame.getScore());
     assertEquals(6, frame.getScore());
-  }
-
-  private List<Integer> toArray(String str) {
-    return Arrays.stream(str.split(","))
-        .map(Integer::valueOf).collect(Collectors.toList());
   }
 
 }

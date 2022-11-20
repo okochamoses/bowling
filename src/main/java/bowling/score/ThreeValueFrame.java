@@ -22,16 +22,20 @@ public class ThreeValueFrame extends Frame {
     }
   }
 
+  private boolean isSpare() {
+    return positionsFilled() && getFirst() + getSecond() == 10;
+  }
+
+  private boolean isStrike() {
+    return getFirst() != null && getFirst() == 10;
+  }
+
   private void updateStrikePinFalls(int pinFall) {
     if (this.getSecond() == null) {
       this.setSecond(pinFall);
     } else {
       this.third = pinFall;
     }
-  }
-
-  private boolean isStrike() {
-    return getFirst() != null && getFirst() == 10;
   }
 
 }

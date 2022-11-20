@@ -35,19 +35,18 @@ public class ScorePrinter<T> {
     return playerScores.values();
   }
 
-  private String getHeader() {
-    return "Frame\t\t1\t\t2\t\t3\t\t4\t\t5\t\t6\t\t7\t\t8\t\t9\t\t10\n";
-  }
-
-
   private String getScoreString(Collection<PlayerScore> playerScores) {
     StringBuilder sb = new StringBuilder();
     sb.append(getHeader());
     for (PlayerScore playerScore : playerScores) {
-      sb.append(printPlayerScore(playerScore));
+      sb.append(printPlayerScore(playerScore)).append("\n");
     }
 
     return sb.toString();
+  }
+
+  private String getHeader() {
+    return "Frame\t\t1\t\t2\t\t3\t\t4\t\t5\t\t6\t\t7\t\t8\t\t9\t\t10\n";
   }
 
   private String printPlayerScore(PlayerScore playerScore) {
@@ -75,31 +74,13 @@ public class ScorePrinter<T> {
       } else {
         if (frame instanceof StrikeFrame) {
           printStrike(sb, frame);
-        } else if (frame.isSpare()) {
+        } else if (frame instanceof SpareFrame) {
           printSpare(sb, frame);
         } else {
           printNormalFrame(sb, frame);
         }
       }
     }
-  }
-
-  private void printNormalFrame(StringBuilder sb, Frame frame) {
-    sb.append(processData(frame.getFirst()))
-        .append("\t")
-        .append(processData(frame.getSecond()))
-        .append("\t");
-  }
-
-  private void printSpare(StringBuilder sb, Frame frame) {
-    sb.append(processData(frame.getFirst()))
-        .append("\t/\t");
-  }
-
-  private void printStrike(StringBuilder sb, Frame frame) {
-    sb.append("\t")
-        .append(processData(frame.getFirst()))
-        .append("\t");
   }
 
   private void printLastFrame(StringBuilder sb, Frame frame) {
@@ -109,6 +90,24 @@ public class ScorePrinter<T> {
         .append(processData(frame.getSecond()))
         .append("\t")
         .append(lastFrame.getThird() == null ? "" : processData(lastFrame.getThird()))
+        .append("\t");
+  }
+
+  private void printStrike(StringBuilder sb, Frame frame) {
+    sb.append("\t")
+        .append(processData(frame.getFirst()))
+        .append("\t");
+  }
+
+  private void printSpare(StringBuilder sb, Frame frame) {
+    sb.append(processData(frame.getFirst()))
+        .append("\t/\t");
+  }
+
+  private void printNormalFrame(StringBuilder sb, Frame frame) {
+    sb.append(processData(frame.getFirst()))
+        .append("\t")
+        .append(processData(frame.getSecond()))
         .append("\t");
   }
 

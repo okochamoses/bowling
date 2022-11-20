@@ -10,15 +10,15 @@ public class StrikeFrame extends Frame {
 
   @Override
   public void addPinFall(int pinFall) {
-    this.addToScore(pinFall);
     if (getFirst() == null) {
       this.setFirst(10);
     } else {
-      extracted(pinFall);
+      updateExtras(pinFall);
     }
+    this.addToScore(pinFall);
   }
 
-  private void extracted(int pinFall) {
+  private void updateExtras(int pinFall) {
     if (strikeExtraPinFalls[0] != null && strikeExtraPinFalls[1] != null)
       throw new ExtraScoreException();
 
@@ -37,4 +37,5 @@ public class StrikeFrame extends Frame {
   public boolean isUnhandledStrike() {
     return getStrikeExtraPinFalls()[0] == null || getStrikeExtraPinFalls()[1] == null;
   }
+
 }

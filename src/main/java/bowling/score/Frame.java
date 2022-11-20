@@ -3,9 +3,11 @@ package bowling.score;
 import bowling.exceptions.ExtraScoreException;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class Frame {
   private static final int FOUL = -1;
   private Integer first;
@@ -14,27 +16,8 @@ public class Frame {
   private Integer spareExtraPinFall;
 
   public void addPinFall(int pinFall) {
+    updateNormalFrameScore(pinFall);
     addToScore(pinFall);
-
-    if (isSpare()) {
-      addToSpareExtraPinFall(pinFall);
-    } else {
-      updateNormalFrameScore(pinFall);
-    }
-  }
-
-  protected void addToScore(int pinFall) {
-    score += pinFall == FOUL ? 0 : pinFall;
-  }
-
-  public boolean isSpare() {
-    return positionsFilled() && first + second == 10;
-  }
-
-  private void addToSpareExtraPinFall(int pinFall) {
-    if (spareExtraPinFall != null)
-      throw new ExtraScoreException();
-    spareExtraPinFall = pinFall;
   }
 
   protected void updateNormalFrameScore(int pinFall) {
@@ -48,7 +31,11 @@ public class Frame {
     }
   }
 
-  private boolean positionsFilled() {
+  protected void addToScore(int pinFall) {
+    score += pinFall == FOUL ? 0 : pinFall;
+  }
+
+  protected boolean positionsFilled() {
     return first != null && second != null;
   }
 
@@ -58,10 +45,6 @@ public class Frame {
 
   public boolean isFilled() {
     return positionsFilled();
-  }
-
-  public boolean isUnhandledSpare() {
-    return this.isSpare() && getSpareExtraPinFall() == null;
   }
 
 }
