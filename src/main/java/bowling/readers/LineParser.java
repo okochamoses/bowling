@@ -32,16 +32,18 @@ public class LineParser implements Parser {
 
       return map;
     } catch (Exception e) {
-      e.printStackTrace();
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Invalid argument -> " + e.getMessage());
     }
   }
 
   private int parsePoint(String point) {
-    if (isFoulScore(point)) {
-      return -1;
+    int pinFall = isFoulScore(point) ? -1 : Integer.parseInt(point);
+
+    if(pinFall < -1 || pinFall > 10) {
+      throw new NumberFormatException("For input string: " + point);
     }
-    return Integer.parseInt(point);
+
+    return pinFall;
   }
 
   private boolean isFoulScore(String point) {
