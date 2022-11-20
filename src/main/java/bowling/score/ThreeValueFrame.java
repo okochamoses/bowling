@@ -1,41 +1,30 @@
 package bowling.score;
 
 import bowling.exceptions.ExtraScoreException;
-import lombok.Getter;
 
-@Getter
 public class ThreeValueFrame extends Frame {
-  private Integer third;
+  private static final int FRAME_LENGTH = 3;
+
+  public ThreeValueFrame() {
+    super(FRAME_LENGTH);
+  }
 
   @Override
   public void addPinFall(int pinFall) {
-    if (third != null) throw new ExtraScoreException();
-
-    addToScore(pinFall);
-
-    if (isSpare()) {
-      third = pinFall;
-    } else if (isStrike()) {
-      updateStrikePinFalls(pinFall);
-    } else {
-      updateNormalFrameScore(pinFall);
-    }
-  }
-
-  private boolean isSpare() {
-    return positionsFilled() && getFirst() + getSecond() == 10;
+    if (!isStrike() && !isSpare() && getTrack() > 1) throw new ExtraScoreException();
+    super.addPinFall(pinFall);
   }
 
   private boolean isStrike() {
     return getFirst() != null && getFirst() == 10;
   }
 
-  private void updateStrikePinFalls(int pinFall) {
-    if (this.getSecond() == null) {
-      this.setSecond(pinFall);
-    } else {
-      this.third = pinFall;
-    }
+  private boolean isSpare() {
+    return isFilled() && getFirst() + getSecond() == 10;
+  }
+
+  public Integer getThird() {
+    return getValues()[2];
   }
 
 }
